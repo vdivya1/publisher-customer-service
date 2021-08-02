@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -82,7 +80,7 @@ public class PublisherRequest {
 
 	@JsonProperty("address")
 	@Valid
-	private List<Address> address = new ArrayList<Address>();
+	private Address address = new Address();
 
 	public PublisherRequest customerNumber(Integer customerNumber) {
 		this.customerNumber = customerNumber;
@@ -96,7 +94,7 @@ public class PublisherRequest {
 	 **/
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
-
+	@Pattern(regexp = "^[A-Z][0-9]{9}")
 	public Integer getCustomerNumber() {
 		return customerNumber;
 	}
@@ -162,7 +160,7 @@ public class PublisherRequest {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	@Pattern(regexp = "^(1[0-2]|0[1-9])/(3[01]\" + \"|[12][0-9]|0[1-9])/[0-9]{4}$")
+	@Pattern(regexp = "^(3[01]|[12][0-9]|0[1-9])-(1[0-2]|0[1-9])-[0-9]{4}$")
 	public String getBirthDate() {
 		return birthDate;
 	}
@@ -227,7 +225,8 @@ public class PublisherRequest {
 	 **/
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
-
+	@Size(min = 10, max = 10)
+    @Pattern(regexp="(0/91)?[7-9][0-9]{9}")
 	public Integer getMobileNumber() {
 		return mobileNumber;
 	}
@@ -248,7 +247,8 @@ public class PublisherRequest {
 	 **/
 	@ApiModelProperty(value = "")
 
-	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$")
+	@Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
+	@Size(min = 1, max = 50)
 	public String getEmail() {
 		return email;
 	}
@@ -278,13 +278,8 @@ public class PublisherRequest {
 		this.customerStatus = customerStatus;
 	}
 
-	public PublisherRequest address(List<Address> address) {
+	public PublisherRequest address(Address address) {
 		this.address = address;
-		return this;
-	}
-
-	public PublisherRequest addAddressItem(Address addressItem) {
-		this.address.add(addressItem);
 		return this;
 	}
 
@@ -298,11 +293,11 @@ public class PublisherRequest {
 
 	@Valid
 
-	public List<Address> getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(List<Address> address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 

@@ -38,7 +38,7 @@ public class Address {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	@Size(min = 0, max = 50)
+	@Size(min = 1, max = 50)
 	public String getAddressLine1() {
 		return addressLine1;
 	}
@@ -99,7 +99,7 @@ public class Address {
 	 **/
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
-
+	@Size(min = 5, max = 5)
 	public Integer getPinCode() {
 		return pinCode;
 	}
